@@ -18,9 +18,10 @@ NewProjectAudioProcessorEditor::NewProjectAudioProcessorEditor (NewProjectAudioP
     panAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(
         audioProcessor.getAPVTS(), "pan", panSlider);
 
-   
+    modeSelector.clear();
     modeSelector.addItem("Balance", 1);
-    modeSelector.addItem("Equal Power", 2);
+    modeSelector.addItem("Stereo Pan", 2); 
+    //modeSelector.addItem("Equal Power", 3);
     
 
     modeSelector.setColour(juce::ComboBox::textColourId, juce::Colours::hotpink);

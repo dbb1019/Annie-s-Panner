@@ -18,7 +18,11 @@ public:
     bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
    #endif
     
-    enum PanMode { Balance = 0, EqualPower };
+    enum PanMode {
+        Balance = 0,
+        StereoPan   
+        //EqualPower
+    };
     
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
@@ -45,7 +49,8 @@ public:
 private:
     juce::AudioProcessorValueTreeState apvts;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
-    juce::LinearSmoothedValue<float> smoothedGainL, smoothedGainR;
+    juce::LinearSmoothedValue<float> smoothedGainL, smoothedGainR, smoothedSideGain;
+    juce::LinearSmoothedValue<float> gLL, gLR, gRL, gRR;
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NewProjectAudioProcessor)
