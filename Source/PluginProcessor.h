@@ -50,7 +50,8 @@ private:
     juce::AudioProcessorValueTreeState apvts;
     juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::LinearSmoothedValue<float> smoothedGainL, smoothedGainR, smoothedSideGain;
-    juce::LinearSmoothedValue<float> gLL, gLR, gRL, gRR;
+    //juce::LinearSmoothedValue<float> gLL, gLR, gRL, gRR;
+    juce::LinearSmoothedValue<float> gLL { 0.0f }, gLR { 0.0f }, gRL { 0.0f }, gRR { 0.0f };
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NewProjectAudioProcessor)

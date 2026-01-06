@@ -48,6 +48,9 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     float pan = juce::jlimit(-1.0f, 1.0f, panValue / 100.0f);
     int mode = (int)apvts.getRawParameterValue("panMode")->load();
 
+    // L->L, R->R
+    float targetLL = 1.0f, targetLR = 0.0f, targetRL = 0.0f, targetRR = 1.0f;
+
     if (numIn == 1) {
         // Mono - Equal Power
         // I just realized that DAWs distinguish between mono and stereo tracks. Are there any DAWs that support tracks with mono input and stereo output?
@@ -62,61 +65,46 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
         if (mode == 0) { // Balance Mode
             smoothedGainL.setTargetValue(juce::jmin(1.0f, 1.0f - pan));
             smoothedGainR.setTargetValue(juce::jmin(1.0f, 1.0f + pan));
+            
+            targetLL = 1.0f; targetLR = 0.0f; targetRL = 0.0f; targetRR = 1.0f;
         }
         
         else if (mode == 1) { //Stereo Pan - Width Spread
             
-                    smoothedGainL.setCurrentAndTargetValue(1.0f);
-                    smoothedGainR.setCurrentAndTargetValue(1.0f);
-                    
-                    float dynamicWidth = 1.0f - std::abs(pan);
 
-                    // pan=0, width=1 -> posL=-1, posR=1
-                    // pan=1, width=0 -> posL=1, posR=1
-                    float posL = juce::jlimit(-1.0f, 1.0f, pan - dynamicWidth);
-                    float posR = juce::jlimit(-1.0f, 1.0f, pan + dynamicWidth);
+                smoothedGainL.setTargetValue(1.0f);
+                smoothedGainR.setTargetValue(1.0f);
+                
+                float dynamicWidth = 1.0f - std::abs(pan);
 
-                    // equal power gain
-                    auto calculateGains = [](float pos, float& leftGain, float& rightGain) {
-                        //map (-1，1) to (0,1)
-                        float norm = (pos + 1.0f) * 0.5f;
-                        float angle = norm * juce::MathConstants<float>::halfPi;
-                        leftGain = std::cos(angle);
-                        rightGain = std::sin(angle);
-                    };
-                    
-                    //Calculate tll tlr trl trr
-                    float tLL, tLR, tRL, tRR;
-                    calculateGains(posL, tLL, tLR);
-                    calculateGains(posR, tRL, tRR);
-            
-                    //float compensation = 1.0f - (std::abs(pan) * (1.0f - 0.707f)); // -3db
-                    float compensation = 1.0f - (std::abs(pan) * (1.0f - 0.596f)); //-4.5db
+                // pan=0, width=1 -> posL=-1, posR=1
+                // pan=1, width=0 -> posL=1, posR=1
+                float posL = juce::jlimit(-1.0f, 1.0f, pan - dynamicWidth);
+                float posR = juce::jlimit(-1.0f, 1.0f, pan + dynamicWidth);
 
-                    gLL.setTargetValue(tLL * compensation);
-                    gLR.setTargetValue(tLR * compensation);
-                    gRL.setTargetValue(tRL * compensation);
-                    gRR.setTargetValue(tRR * compensation);
-                    
-                    auto* outL = buffer.getWritePointer(0);
-                    auto* outR = buffer.getWritePointer(1);
-            
+                // equal power gain
+                auto calculateGains = [](float pos, float& leftGain, float& rightGain) {
+                    //map (-1，1) to (0,1)
+                    float norm = (pos + 1.0f) * 0.5f;
+                    float angle = norm * juce::MathConstants<float>::halfPi;
+                    leftGain = std::cos(angle);
+                    rightGain = std::sin(angle);
+                };
+                
+                //Calculate tll tlr trl trr
+                float tLL, tLR, tRL, tRR;
+                calculateGains(posL, tLL, tLR);
+                calculateGains(posR, tRL, tRR);
+        
+                float compensation = 1.0f - (std::abs(pan) * (1.0f - 0.707f)); // -3db
+                //float compensation = 1.0f - (std::abs(pan) * (1.0f - 0.596f)); //-4.5db
 
-                    for (int i = 0; i < numSamples; ++i) {
-                        float inL = outL[i];
-                        float inR = outR[i];
-                        const float ll = gLL.getNextValue();
-                        const float lr = gLR.getNextValue();
-                        const float rl = gRL.getNextValue();
-                        const float rr = gRR.getNextValue();
-                        
-                        outL[i] = inL * ll + inR * rl;
-                        outR[i] = inL * lr + inR * rr;
-                    }
-                    
-                    return;
-            
-                }
+                targetLL = tLL * compensation;
+                targetLR = tLR * compensation;
+                targetRL = tRL * compensation;
+                targetRR = tRR * compensation;
+                
+            }
         
 //        else if (mode == 1) { // Stereo Pan (Linked M/S)
         
@@ -159,13 +147,31 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
 //        }
     }
 
+
+    gLL.setTargetValue(targetLL);
+    gLR.setTargetValue(targetLR);
+    gRL.setTargetValue(targetRL);
+    gRR.setTargetValue(targetRR);
    
     auto* outL = buffer.getWritePointer(0);
     auto* outR = buffer.getWritePointer(1);
+
     for (int i = 0; i < numSamples; ++i)
     {
-        outL[i] *= smoothedGainL.getNextValue();
-        outR[i] *= smoothedGainR.getNextValue();
+        float inL = outL[i];
+        float inR = (numIn > 1) ? outR[i] : inL;
+
+
+        float sL = smoothedGainL.getNextValue();
+        float sR = smoothedGainR.getNextValue();
+        
+        float ll = gLL.getNextValue();
+        float lr = gLR.getNextValue();
+        float rl = gRL.getNextValue();
+        float rr = gRR.getNextValue();
+
+        outL[i] = (inL * ll + inR * rl) * sL;
+        outR[i] = (inL * lr + inR * rr) * sR;
     }
 }
 
@@ -201,11 +207,22 @@ void NewProjectAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
         gRL.reset(sampleRate, 0.02);
         gRR.reset(sampleRate, 0.02);
     
+        smoothedGainL.reset(sampleRate, 0.02);
+        smoothedGainR.reset(sampleRate, 0.02);
+    
         smoothedGainL.setCurrentAndTargetValue (1.0f);
         smoothedGainR.setCurrentAndTargetValue (1.0f);
     
+        gLL.setCurrentAndTargetValue(1.0f);
+        gRR.setCurrentAndTargetValue(1.0f);
+        gLR.setCurrentAndTargetValue(0.0f);
+        gRL.setCurrentAndTargetValue(0.0f);
+    
 }
+
+
 void NewProjectAudioProcessor::releaseResources() {}
+
 
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool NewProjectAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
