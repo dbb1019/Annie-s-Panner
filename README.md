@@ -42,8 +42,6 @@ By using a $2 \times 2$ stereo matrix and the Equal-Power Law, this mode remaps 
 
 #### Auto Width & Field Folding
 
-Inspired by the stereo pan in **Logic Pro**:
-
 - Center Position: The soundstage is fully expanded at its maximum geometric width ($100\%$ Width).
 - The Panning Process: As the sound moves away from the center, the algorithm asymmetrically compresses the soundstage boundaries. This creates a "Field Folding" effect where the closer the sound is to the edges, the more the stereo width automatically narrows.
 - Edge Positions: When the pan reaches an extreme (hard left or hard right), the soundstage completely closes and converges into a monophonic signal ($0\%$ Width). 
