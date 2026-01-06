@@ -58,22 +58,22 @@ Inspired by the stereo pan in **Logic Pro**:
 
 Move the files to:
 
-```bash
+```
 # VST3
-~/Library/Audio/Plug-Ins/VST3/
+```~/Library/Audio/Plug-Ins/VST3/```
 
 # AU (.component)
-~/Library/Audio/Plug-Ins/Components/
-````
+```~/Library/Audio/Plug-Ins/Components/```
+
 
 macOS Security Fix: If blocked, go to System Settings > Privacy & Security and click "Open Anyway".
 (Or run ```sudo xattr -cr [plugin_path]``` in Terminal).
 
 #### Option 2: Build from Source
 
-Clone the repo: git clone https://github.com/dbb1019/Annie-s-Panner.git
+Clone the repo: ```git clone https://github.com/dbb1019/Annie-s-Panner.git```
 
-Open Annie's Panner.jucer in Projucer.
+Open ```Annie's Panner.jucer``` in Projucer.
 
 Export to Xcode or Visual Studio and build.
 
