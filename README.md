@@ -1,6 +1,8 @@
 # Annie's Panner
 
-Welcome to **Annie's Panner**! ִ
+It is a stereo panner...  
+It moves sound left...  
+It moves sound right...
 
 ࣪ ˖ ࣪ ᨰꫀᥣᥴ᥆ꩇꫀ ! ᰔ ִ°🥂⋆.ೃ🍾࿔*:･ ׄ
 
@@ -73,9 +75,3 @@ macOS Security Fix: If blocked, go to System Settings > Privacy & Security and c
 - Open ```Annie's Panner.jucer``` in Projucer.
 
 - Export to Xcode or Visual Studio and build.
-
----
-
-It is a stereo panner...  
-It moves sound left...  
-It moves sound right...
