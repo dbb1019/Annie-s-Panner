@@ -58,7 +58,6 @@ Inspired by the stereo pan in **Logic Pro**:
 
 Move the files to:
 
-```
 # VST3
 ```~/Library/Audio/Plug-Ins/VST3/```
 
