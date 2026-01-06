@@ -38,9 +38,5 @@ Inspired by the stereo pan in **Logic Pro**:
 ---
 
 It has zero revolutionary features.  
-It moves sound left.  
-It moves sound right.
-
-So... I made a fancy demo video!
-
----
+It moves sound left...  
+It moves sound right...
