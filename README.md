@@ -50,6 +50,34 @@ Inspired by the stereo pan in **Logic Pro**:
 
 ---
 
+### Installation
+
+#### Option 1: Download Binaries
+
+[Download here](https://github.com/dbb1019/Annie-s-Panner/releases/tag/v0.9.0)
+
+Move the files to:
+
+```bash
+# VST3
+~/Library/Audio/Plug-Ins/VST3/
+
+# AU (.component)
+~/Library/Audio/Plug-Ins/Components/
+
+macOS Security Fix: If blocked, go to System Settings > Privacy & Security and click "Open Anyway".
+(Or run sudo xattr -cr /path/to/plugin.vst3 in Terminal).
+
+#### Option 2: Build from Source
+
+Clone the repo: git clone https://github.com/dbb1019/Annie-s-Panner.git
+
+Open Annie's Panner.jucer in Projucer.
+
+Export to Xcode or Visual Studio and build.
+
+---
+
 It is a stereo panner...  
 It moves sound left...  
 It moves sound right...
