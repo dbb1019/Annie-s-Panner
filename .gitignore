@@ -1,5 +1,7 @@
-
+# Ignore files generated during compilation.
+Builds/
 build/
+*.jucer.user
 
 # Ignore Mac system files.
 .DS_Store
