@@ -15,7 +15,7 @@ It includes two modes: **Balance** and **Stereo Pan**.
 
 The following video demonstrates the difference between the two pan modes.
 
-In this demo, a test WAV file with different content in the left and right channels is used:
+In this demo, I used a test WAV file with different content in the left and right channels:
 
 - The left channel contains a minimal-style track  
 - The right channel contains a rhythmic track
