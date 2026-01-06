@@ -7,7 +7,7 @@ It includes two modes: **Balance** and **Stereo Pan**.
 
 ![Annie's Panner Screenshot](Annie's%20Panner.png)
 
----
+
 
 ## Modes
 
@@ -19,7 +19,7 @@ This mode moves the stereo image by controlling the volume balance between the l
 - Panning left or right only attenuates the opposite channel  
 - The original stereo width is preserved  
 
----
+
 
 ### Stereo Pan Mode
 
