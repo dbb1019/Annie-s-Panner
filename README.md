@@ -1,6 +1,6 @@
 # Annie's Panner
 
-Welcome to **Annie's Panner**.
+Welcome to **Annie's Panner**! ִ ࣪ ˖ ࣪ ᨰꫀᥣᥴ᥆ꩇꫀ ! ᰔ ִ°🥂⋆.ೃ🍾࿔*:･ ׄ
 
 Annie's Panner is a stereo panner made with **JUCE**.  
 It includes two modes: **Balance** and **Stereo Pan**.
