@@ -1,4 +1,6 @@
 
+build/
+
 # Ignore Mac system files.
 .DS_Store
 .vscode/
