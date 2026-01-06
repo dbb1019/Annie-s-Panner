@@ -54,7 +54,7 @@ Inspired by the stereo pan in **Logic Pro**:
 
 #### Option 1: Download Binaries
 
-[Download here](https://github.com/dbb1019/Annie-s-Panner/releases/tag/v0.9.0)
+[Download macOS here](https://github.com/dbb1019/Annie-s-Panner/releases/tag/v0.9.0)
 
 Move the files to:
 
