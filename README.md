@@ -10,6 +10,20 @@ Annie's Panner is a stereo panner made with **JUCE**.
 It includes two modes: **Balance** and **Stereo Pan**.
 
 
+
+## Demo Video
+
+The following video demonstrates the difference between the two pan modes.
+
+In this demo, I used a test WAV file with different content in the left and right channels:
+
+- The left channel contains a minimal-style track  
+- The right channel contains a rhythmic track
+
+Watch the video: https://youtu.be/2zmgMn7s8Ec?si=W2HwXww34XUHyh1d 
+
+
+
 ## Modes
 
 ### Balance Mode
@@ -24,22 +38,21 @@ This mode moves the stereo image by controlling the volume balance between the l
 
 ### Stereo Pan Mode
 
-This mode redistributes energy between the left and right channels using a stereo matrix and equal-power calculation:
+By using a $2 \times 2$ stereo matrix and the Equal-Power Law, this mode remaps input signals to the output soundstage through inter-channel cross-mixing. Unlike the Balance mode, this mode preserves the original signal's energy distribution and sonic details throughout the panning process, ensuring that no information from either side is lost.
 
-- The stereo image moves as a whole, with cross-mixing between channels  
-- The spatial perception is more natural  
-
-#### Auto Width
+#### Auto Width & Field Folding
 
 Inspired by the stereo pan in **Logic Pro**:
 
-- The closer the sound is to the center, the wider the stereo image  
-- The closer the sound is to the edges, the stereo width automatically narrows  
+- Center Position: The soundstage is fully expanded at its maximum geometric width ($100\%$ Width).
+- The Panning Process: As the sound moves away from the center, the algorithm asymmetrically compresses the soundstage boundaries. This creates a "Field Folding" effect where the closer the sound is to the edges, the more the stereo width automatically narrows.
+- Edge Positions: When the pan reaches an extreme (hard left or hard right), the soundstage completely closes and converges into a monophonic signal ($0\%$ Width). 
 
 ---
 
-It has zero revolutionary features.  
+It is a stereo panner...  
 It moves sound left...  
 It moves sound right...
 
+#### Installation & Builds
 If you are on macOS, you can download the AU and VST3 versions from the **Builds > macOS > build > Release** folder.
