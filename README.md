@@ -9,6 +9,7 @@ Welcome to **Annie's Panner**! ִ
 Annie's Panner is a stereo panner made with **JUCE**.  
 It includes two modes: **Balance** and **Stereo Pan**.
 
+<video src="docs/demo.mp4" width="600" controls></video>
 
 ## Modes
 
