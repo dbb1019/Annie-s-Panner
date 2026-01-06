@@ -44,7 +44,7 @@ By using a $2 \times 2$ stereo matrix and the Equal-Power Law, this mode remaps 
 
 #### Auto Width & Field Folding
 
-(I really wanted to stick to one knob here; it’s a bit of a trade-off on the control side, but it keeps me in the flow, so I decided to skip a width knob altogether.)
+(I really wanted to go with one knob here; it’s a bit of a trade-off on the control side, but it keeps me in the flow, so I decided to skip a width knob altogether.)
 
 - Center Position: The soundstage is fully expanded at its maximum geometric width ($100\%$ Width).
 - The Panning Process: As the sound moves away from the center, the algorithm asymmetrically compresses the soundstage boundaries. This creates a "Field Folding" effect where the closer the sound is to the edges, the more the stereo width automatically narrows.
