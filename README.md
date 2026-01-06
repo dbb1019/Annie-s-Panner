@@ -6,7 +6,7 @@ It moves sound right...
 
 ࣪ ˖ ࣪ ᨰꫀᥣᥴ᥆ꩇꫀ ! ᰔ ִ°🥂⋆.ೃ🍾࿔*:･ ׄ
 
-<img src="Annie's%20Panner.png" alt="Annie's Panner Screenshot" width="60%">
+<img src="Annie's%20Panner.png" alt="Annie's Panner Screenshot" width="100%">
 
 Annie's Panner is a stereo panner made with **JUCE**.  
 It includes two modes: **Balance** and **Stereo Pan**.
