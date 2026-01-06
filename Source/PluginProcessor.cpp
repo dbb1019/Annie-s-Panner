@@ -31,31 +31,6 @@ NewProjectAudioProcessor::~NewProjectAudioProcessor()
    
 }
 
-//void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
-//{
-//    juce::ScopedNoDenormals noDenormals;
-//    auto totalNumInputChannels  = getTotalNumInputChannels();
-//    auto totalNumOutputChannels = getTotalNumOutputChannels();
-//
-//    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-//        buffer.clear (i, 0, buffer.getNumSamples());
-//
-//    float panValue = apvts.getRawParameterValue("pan")->load();
-//    float normalizedPan = (panValue + 100.0f) / 200.0f;
-//
-//    //Equal power pan, but the center position is 3dB lower.
-
-//    float angle = normalizedPan * juce::MathConstants<float>::halfPi;
-//    float gainL = std::cos(angle);
-//    float gainR = std::sin(angle);
-//
-//    if (totalNumInputChannels >= 2)
-//    {
-//        buffer.applyGain(0, 0, buffer.getNumSamples(), gainL);
-//        buffer.applyGain(1, 0, buffer.getNumSamples(), gainR);
-//    }
-//}
-
 
 void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
