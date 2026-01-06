@@ -9,12 +9,20 @@ Welcome to **Annie's Panner**! ִ
 Annie's Panner is a stereo panner made with **JUCE**.  
 It includes two modes: **Balance** and **Stereo Pan**.
 
-<div align="center">
-  <video src="Annie's%20Panner%20Demo.mp4" width="700" controls>
-    您的浏览器不支持视频播放。
-  </video>
-  <p><b>Annie's Panner Demo Video</b></p>
-</div>
+
+
+## Demo Video
+
+The following video demonstrates the difference between the two pan modes.
+
+In this demo, a test WAV file with different content in the left and right channels is used:
+
+- The left channel contains a minimal-style track  
+- The right channel contains a rhythmic track
+
+Watch the video: https://youtu.be/2zmgMn7s8Ec?si=W2HwXww34XUHyh1d 
+
+
 
 ## Modes
 
