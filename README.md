@@ -67,7 +67,7 @@ Move the files to:
 ````
 
 macOS Security Fix: If blocked, go to System Settings > Privacy & Security and click "Open Anyway".
-(Or run ```sudo xattr -cr [plugin_path]`` in Terminal).
+(Or run ```sudo xattr -cr [plugin_path]``` in Terminal).
 
 #### Option 2: Build from Source
 
