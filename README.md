@@ -1,8 +1,8 @@
 # Annie's Panner
 
-Welcome to the GitHub page for **Annie's Panner**.
+Welcome to **Annie's Panner**.
 
-Annie's Panner is a 2.0 stereo panner made with **JUCE**.  
+Annie's Panner is a stereo panner made with **JUCE**.  
 It includes two modes: **Balance** and **Stereo Pan**.
 
 ![Annie's Panner Screenshot](Annie's%20Panner.png)
