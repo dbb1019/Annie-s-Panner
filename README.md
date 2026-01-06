@@ -67,7 +67,7 @@ Move the files to:
 ````
 
 macOS Security Fix: If blocked, go to System Settings > Privacy & Security and click "Open Anyway".
-(Or run ```sudo xattr -cr /path/to/plugin.vst3 in Terminal```).
+(Or run ```sudo xattr -cr /path/to/plugin.vst3``` in Terminal).
 
 #### Option 2: Build from Source
 
