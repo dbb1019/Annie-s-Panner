@@ -68,12 +68,14 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
         buffer.clear (ch, 0, numSamples);
     
     float panValue = apvts.getRawParameterValue("pan")->load();
+    
     // map -100~100 to -1.0~1.0
     float pan = juce::jlimit(-1.0f, 1.0f, panValue / 100.0f);
     int mode = (int)apvts.getRawParameterValue("panMode")->load();
 
     if (numIn == 1) {
         // Mono - Equal Power
+        // I just realized that DAWs distinguish between mono and stereo tracks. Are there any DAWs that support tracks with mono input and stereo output?
         float normPan = (pan + 1.0f) * 0.5f;
         float angle = normPan * juce::MathConstants<float>::halfPi;
         smoothedGainL.setTargetValue(std::cos(angle));
@@ -92,28 +94,29 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
                     smoothedGainL.setCurrentAndTargetValue(1.0f);
                     smoothedGainR.setCurrentAndTargetValue(1.0f);
                     
-                    // 1. 计算随动宽度：Pan 在中间时为 1.0，Pan 到极值时为 0.0
                     float dynamicWidth = 1.0f - std::abs(pan);
 
-                    // 2. 计算左右声道的“逻辑位置”
-                    // 当 pan=0, width=1 -> posL=-1, posR=1 (全立体声)
-                    // 当 pan=1, width=0 -> posL=1, posR=1 (右边单声道)
+                    // pan=0, width=1 -> posL=-1, posR=1
+                    // pan=1, width=0 -> posL=1, posR=1
                     float posL = juce::jlimit(-1.0f, 1.0f, pan - dynamicWidth);
                     float posR = juce::jlimit(-1.0f, 1.0f, pan + dynamicWidth);
 
-                    // 3. 等功率平移计算函数
+                    // equal power gain
                     auto calculateGains = [](float pos, float& leftGain, float& rightGain) {
+                        //map (-1，1) to (0,1)
                         float norm = (pos + 1.0f) * 0.5f;
                         float angle = norm * juce::MathConstants<float>::halfPi;
                         leftGain = std::cos(angle);
                         rightGain = std::sin(angle);
                     };
-
+                    
+                    //Calculate tll tlr trl trr
                     float tLL, tLR, tRL, tRR;
-                    calculateGains(posL, tLL, tLR); // 左输入在输出中的分布
-                    calculateGains(posR, tRL, tRR); // 右输入在输出中的分布
+                    calculateGains(posL, tLL, tLR);
+                    calculateGains(posR, tRL, tRR);
             
-                    float compensation = 1.0f - (std::abs(pan) * (1.0f - 0.707f));
+                    //float compensation = 1.0f - (std::abs(pan) * (1.0f - 0.707f)); // -3db
+                    float compensation = 1.0f - (std::abs(pan) * (1.0f - 0.596f)); //-4.5db
 
                     gLL.setTargetValue(tLL * compensation);
                     gLR.setTargetValue(tLR * compensation);
@@ -127,10 +130,13 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
                     for (int i = 0; i < numSamples; ++i) {
                         float inL = outL[i];
                         float inR = outR[i];
+                        const float ll = gLL.getNextValue();
+                        const float lr = gLR.getNextValue();
+                        const float rl = gRL.getNextValue();
+                        const float rr = gRR.getNextValue();
                         
-                        // 应用 4 路增益混合
-                        outL[i] = (inL * gLL.getNextValue()) + (inR * gRL.getNextValue());
-                        outR[i] = (inL * gLR.getNextValue()) + (inR * gRR.getNextValue());
+                        outL[i] = inL * ll + inR * rl;
+                        outR[i] = inL * lr + inR * rr;
                     }
                     
                     return;
@@ -170,7 +176,7 @@ void NewProjectAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
 //            return;
 //        }
         
-//        else { // Equal Power Mode (mode == 2) - just for fun haha it seems not good
+//        else { // Equal Power Mode (mode == 2) - it seems not good
 //            float normPan = (pan + 1.0f) * 0.5f;
 //            float angle = normPan * juce::MathConstants<float>::halfPi;
 //            smoothedGainL.setTargetValue(std::cos(angle));
