@@ -4,7 +4,7 @@ Welcome to **Annie's Panner**! ִ
 
 ࣪ ˖ ࣪ ᨰꫀᥣᥴ᥆ꩇꫀ ! ᰔ ִ°🥂⋆.ೃ🍾࿔*:･ ׄ
 
-![Annie's Panner Screenshot](Annie's%20Panner.png)
+<img src="Annie's%20Panner.png" alt="Annie's Panner Screenshot" width="60%">
 
 Annie's Panner is a stereo panner made with **JUCE**.  
 It includes two modes: **Balance** and **Stereo Pan**.
